@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href='/staticFiles/style.css' />
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://kit.fontawesome.com/f0601b0fb2.js" crossorigin="anonymous"></script>
+<script type='module' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js'></script>
+<script nomodule='' src='https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.js'></script>
+<meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.2.1/font-awesome-animation.min.css'>
+</head>
+<body>
+  <video id="video" width="300px" height="200px" autoplay></video>
+  <div id="foto">
+    <div class="circle">
+      <span class="circle__btn">
+        <ion-icon class="pause" name="camera-outline"></ion-icon>
+        <ion-icon class="play" name=""></ion-icon>
+        <div class="load-9">
+          <div class="spinner">
+            <div class="bubble-1"></div>
+            <div class="bubble-2"></div>
+          </div>
+        </div>
+      </span>
+      <span class="circle__back-1"></span>
+      <span class="circle__back-2"></span>
+    </div>
+  </div>
+  <canvas id="canvas" width="100" height="100" style="display:none"></canvas>
+  <div class="col-sm-12" style="padding:20px; display:none">
+    <div class="alert fade alert-simple alert-info alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show" role="alert" data-brk-library="component__alert">
+      <i class="start-icon  fa fa-info-circle faa-shake animated"></i>
+      <strong class="font__weight-semibold">Animal: </strong>  <span id="count">{{ texto }}</span>
+    </div>
+  </div>
+</body>
+</html>
+
+
+<script src='/staticFiles/script.js'></script>
+<script>
+  var video = document.getElementById('video');
+  var canvas = document.getElementById('canvas');
+  var context = canvas.getContext('2d');
+  
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+      video.srcObject = stream;
+      video.play();
+      window.setInterval(function () {
+        context.drawImage(video, 0, 0, 100, 100);
+      }, 100);
+    });
+  }
+  function upload(file) {
+    var formdata = new FormData();
+    formdata.append("snap", file);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "{{ url_for('upload') }}", true);
+    xhr.responseType = 'blob';
+    xhr.onload = function () {
+      if (this.status = 200) {
+      } else {
+        console.error(xhr);
+      }
+    };
+    xhr.send(formdata);
+    esperandoResultado();
+    arreglarBoton();
+  }
+</script>
