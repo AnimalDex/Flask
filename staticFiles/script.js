@@ -1,7 +1,6 @@
-/* Boton sacar */
 window.setInterval(function () {
   const request = new XMLHttpRequest();
-  request.open('POST', '/up', true);
+  request.open('POST', '/animal', true);
   request.onload = () => {
     const response = request.responseText;
     document.getElementById('count').innerHTML = response;
@@ -9,7 +8,6 @@ window.setInterval(function () {
   request.send();
 }, 100);
 
-/* -Mostrar resultado */
 const play = document.querySelector('.play');
 const pause = document.querySelector('.pause');
 const playBtn = document.querySelector('.circle__btn');

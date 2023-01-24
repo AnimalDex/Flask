@@ -34,7 +34,7 @@ def send_file_data(imagen, data, mimetype='image/jpeg', filename='output.jpg'):
   response.headers.set('Content-Type', mimetype)
   response.headers.set('Content-Disposition', 'attachment', filename=filename)
   global texto
-  texto = padentro1()
+  texto = procesarModelo()
   return response
     
 @app.route('/upload', methods=['GET', 'POST'])
@@ -49,8 +49,8 @@ def upload():
     else:
       return 'Error!'
 
-@app.route("/up", methods=["POST"])
-def upvote():
+@app.route("/animal", methods=["POST"])
+def devuelveAnimal():
     return str(texto)
 
 if __name__ == '__main__':

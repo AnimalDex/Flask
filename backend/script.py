@@ -3,18 +3,18 @@ import numpy as np
 from os import listdir
 
 
-def prediction(model, image):
+def prediccion(model, image):
   img = tf.keras.preprocessing.image.load_img(image, target_size=(100, 100))
   img_array = tf.keras.preprocessing.image.img_to_array(img)
   img_array = tf.expand_dims(img_array, 0) # Create a batch
-  predictions = model.predict(img_array, verbose=1)
-  print(predictions)
-  score = tf.nn.softmax(predictions[0])
-  print(score)
-  return show_three_best(score)
+  predicciones = model.predict(img_array, verbose=1)
+  print(predicciones)
+  puntuacion = tf.nn.softmax(predicciones[0])
+  print(puntuacion)
+  return mostrar_tres_mejores(puntuacion)
 
-def show_three_best(score):
-  razas_porcentaje = score.numpy()
+def mostrar_tres_mejores(puntuacion):
+  razas_porcentaje = puntuacion.numpy()
   resultado_nombre = []
   #animales = ['African_hunting_dog', 'Mexican_hairless', 'dhole', 'dingo']
   """
@@ -35,6 +35,6 @@ def show_three_best(score):
   return resultado_nombre[0]
 
 
-def padentro1():
-  modelo = tf.keras.models.load_model('backend/animalespocos.h5', compile = False)
-  return prediction(modelo, 'images/animal.jpg')
+def procesarModelo():
+  modelo = tf.keras.models.load_model('backend/modelo_nuevo.h5', compile = False)
+  return prediccion(modelo, 'images/animal.jpg')
